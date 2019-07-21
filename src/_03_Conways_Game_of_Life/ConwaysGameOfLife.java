@@ -13,7 +13,7 @@ import javax.swing.JTextField;
 
 public class ConwaysGameOfLife extends JPanel implements ActionListener{
 	private static final long serialVersionUID = 1L;
-	
+	//TODO find out why the ui is exploding
 	public static final int WIDTH = 500;
 	public static final int HEIGHT = 500;
 	public static final int CELLS_PER_ROW = 50;

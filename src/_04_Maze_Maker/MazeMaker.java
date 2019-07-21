@@ -1,6 +1,7 @@
 package _04_Maze_Maker;
 
 import java.util.ArrayList;
+
 import java.util.Random;
 import java.util.Stack;
 
@@ -22,10 +23,11 @@ public class MazeMaker{
 		maze = new Maze(width, height);
 		
 		//4. select a random cell to start
+		Random rand = new Random();
 		
 		
 		//5. call selectNextPath method with the randomly selected cell
-		
+		 selectNextPath(maze.getCell(rand.nextInt(w), rand.nextInt(h)));
 		
 		return maze;
 	}
@@ -33,9 +35,19 @@ public class MazeMaker{
 	//6. Complete the selectNextPathMethod
 	private static void selectNextPath(Cell currentCell) {
 		//A. mark cell as visited
-
+		currentCell.setBeenVisited(true);
 		//B. check for unvisited neighbors using the cell
-		
+		ArrayList<Cell> neighbors = new ArrayList<Cell>();
+		for(int i = -1; i < 2; i++)
+		{
+			for(int j = -1; j < 2; j++)
+			{
+				if(i < 0 || j < 0 || i > width || j > height || (i == 0 && j == 0))
+					continue;
+				if(maze.getCell(currentCell.getX() + i, currentCell.getY() + j).hasBeenVisited() == false)
+					neighbors.add(maze.getCell(currentCell.getX() + i, currentCell.getY() + j));
+			}
+		}
 		//C. if has unvisited neighbors,
 		
 			//C1. select one at random.
@@ -48,7 +60,33 @@ public class MazeMaker{
 		
 			//C5. call the selectNextPath method with the current cell
 			
-			
+		if(neighbors.size() > 0)
+		{
+			Random rand = new Random();
+			Cell neighbor = neighbors.get(rand.nextInt(neighbors.size()));
+			uncheckedCells.push(neighbor);
+			if(neighbor.getX() > currentCell.getX())
+			{
+				currentCell.setEastWall(false);
+				neighbor.setWestWall(false);
+			}
+			if(neighbor.getX() < currentCell.getX())
+			{
+				currentCell.setWestWall(false);
+				neighbor.setEastWall(false);
+			}
+			if(neighbor.getY() < currentCell.getY())
+			{
+				currentCell.setSouthWall(false);
+				neighbor.setNorthWall(false);
+			}
+			if(neighbor.getY() > currentCell.getX())
+			{
+				currentCell.setNorthWall(false);
+				neighbor.setSouthWall(false);
+			}
+			//TODO Finish c4-c5
+		}
 		//D. if all neighbors are visited
 		
 			//D1. if the stack is not empty
