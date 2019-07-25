@@ -20,6 +20,7 @@ public class MazeMaker{
 	public static Maze generateMaze(int w, int h){
 		width = w;
 		height = h;
+		System.out.println(width + " " + height);
 		maze = new Maze(width, height);
 		
 		//4. select a random cell to start
@@ -27,7 +28,7 @@ public class MazeMaker{
 		
 		
 		//5. call selectNextPath method with the randomly selected cell
-		 selectNextPath(maze.getCell(rand.nextInt(w), rand.nextInt(h)));
+		 selectNextPath(maze.getCell(rand.nextInt(w - 1), rand.nextInt(h - 1)));
 		
 		return maze;
 	}
@@ -42,7 +43,8 @@ public class MazeMaker{
 		{
 			for(int j = -1; j < 2; j++)
 			{
-				if(i + currentCell.getX()< 0 || j + currentCell.getY()< 0 || i + currentCell.getY() >= width || j + currentCell.getY() >= height || (i == 0 && j == 0))
+				System.out.println(currentCell.getX() + i);
+				if(i + currentCell.getX()< 0 || j + currentCell.getY()< 0 || i + currentCell.getX() >= width || j + currentCell.getY() >= height  || (i == 0 && j == 0))
 					continue;
 				if(maze.getCell(currentCell.getX() + i, currentCell.getY() + j).hasBeenVisited() == false)
 					neighbors.add(maze.getCell(currentCell.getX() + i, currentCell.getY() + j));
